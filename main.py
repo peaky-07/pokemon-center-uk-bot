@@ -34,6 +34,7 @@ async def main():
         soup = BeautifulSoup(r.text, "html.parser")
 
         page_text = soup.get_text(" ", strip=True)
+        await send_message(f"Page length: {len(page_text)}")
 
         matches = []
 
