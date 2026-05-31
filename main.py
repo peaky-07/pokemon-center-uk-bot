@@ -45,4 +45,9 @@ async def main():
     except Exception as e:
         await send_message(f"Bot error: {e}")
 
-asyncio.run(main())
+async def runner():
+    while True:
+        await main()
+        await asyncio.sleep(300)  # check every 5 minutes
+
+asyncio.run(runner())
