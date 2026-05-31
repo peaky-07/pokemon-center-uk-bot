@@ -10,12 +10,20 @@ CHAT_ID = os.environ["CHAT_ID"]
 URL = "https://www.pokemoncenter.com/en-gb/category/trading-card-game"
 
 KEYWORDS = [
-    "Prismatic Evolutions",
-    "Team Rocket",
-    "Destined Rivals",
+KEYWORDS = [
+    "pre-order",
+    "preorder",
     "Elite Trainer Box",
     "ETB",
-    "Booster Bundle"
+    "Booster Bundle",
+    "Booster Box",
+    "Premium Collection",
+    "Collection",
+    "Tin",
+    "Bundle",
+    "Trainer Box",
+    "Pokémon Center Elite Trainer Box"
+]
 ]
 
 async def send_message(text):
