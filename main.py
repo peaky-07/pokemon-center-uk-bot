@@ -24,7 +24,6 @@ async def send_message(text):
 
 async def main():
     try:
-        await send_message("Bot started successfully")
         r = requests.get(URL, timeout=30)
         soup = BeautifulSoup(r.text, "html.parser")
 
