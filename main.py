@@ -43,20 +43,26 @@ def get_products():
         )
     }
 
-r = requests.get(
-    URL,
-    timeout=30,
-    headers={
-        "User-Agent": "Mozilla/5.0"
+def get_products():
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 Chrome/124 Safari/537.36"
+        )
     }
-)
 
-print(f"Status: {r.status_code}")
-print(f"HTML length: {len(r.text)}")
-print("FIRST 1000 CHARS:")
-print(r.text[:1000])
+    r = requests.get(
+        URL,
+        timeout=30,
+        headers=headers
+    )
 
-soup = BeautifulSoup(r.text, "html.parser")
+    print(f"Status: {r.status_code}")
+    print(f"HTML length: {len(r.text)}")
+    print("FIRST 1000 CHARS:")
+    print(r.text[:1000])
+
+    soup = BeautifulSoup(r.text, "html.parser")
 
     products = {}
 
@@ -77,7 +83,6 @@ soup = BeautifulSoup(r.text, "html.parser")
         products[href] = name
 
     return products
-
 
 async def check_site():
     try:
