@@ -78,7 +78,7 @@ async def check_site():
 
         seen = load_seen()
 
-        if not seen:
+if not seen:
         print("First run detected, saving products only")
         save_seen(current_products.keys())
         return
