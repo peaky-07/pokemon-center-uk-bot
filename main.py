@@ -51,7 +51,7 @@ def get_products():
     print(f"Status: {r.status_code}")
     print(f"Length: {len(r.text)}")
 
-    soup = BeautifulSoup(r.text, "html.parser")
+    soup = BeautifulSoup(r.text, "xml")
 
     products = {}
 
