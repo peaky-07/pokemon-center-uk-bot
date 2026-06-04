@@ -32,7 +32,7 @@ def load_seen():
 
 def save_seen(products):
     with open(SEEN_FILE, "w") as f:
-        json.dump(list(products), 
+        json.dump(list(products), f)
         
         
 def get_products():
