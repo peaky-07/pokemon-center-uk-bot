@@ -78,7 +78,12 @@ async def check_site():
 
         seen = load_seen()
 
-        new_urls = set(current_products.keys()) - seen
+if not seen:
+    print("First run detected, saving products only")
+    save_seen(current_products.keys())
+    return
+
+new_urls = set(current_products.keys()) - seen
 
         if new_urls:
             for url in new_urls:
