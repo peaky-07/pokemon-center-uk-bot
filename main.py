@@ -32,9 +32,9 @@ def load_seen():
 
 def save_seen(products):
     with open(SEEN_FILE, "w") as f:
-        json.dump(list(products), f)
-
-
+        json.dump(list(products), 
+        
+        
 def get_products():
     headers = {
         "User-Agent": (
@@ -44,31 +44,31 @@ def get_products():
     }
 
     r = requests.get(
-    URL,
-    timeout=30,
-    headers=headers
-)
+        URL,
+        timeout=30,
+        headers=headers
+    )
 
-print(f"Status: {r.status_code}")
-print(f"Length: {len(r.text)}")
+    print(f"Status: {r.status_code}")
+    print(f"Length: {len(r.text)}")
 
-soup = BeautifulSoup(r.text, "xml")
+    soup = BeautifulSoup(r.text, "xml")
 
-products = {}
+    products = {}
 
-for loc in soup.find_all("loc"):
-    url = loc.text.strip()
+    for loc in soup.find_all("loc"):
+        url = loc.text.strip()
 
-    if "/product/" not in url:
-        continue
+        if "/product/" not in url:
+            continue
 
-    product_id = url.split("/product/")[1].split("/")[0]
+        product_id = url.split("/product/")[1].split("/")[0]
 
-    products[url] = product_id
+        products[url] = product_id
 
-print(f"Found {len(products)} products")
+    print(f"Found {len(products)} products")
 
-return products
+    return products
 
 async def check_site():
     try:
