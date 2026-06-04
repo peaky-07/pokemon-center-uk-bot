@@ -8,7 +8,7 @@ from telegram import Bot
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
 
-URL = "https://www.pokemoncenter.com/en-gb/category/trading-card-game"
+URL = "https://www.pokemoncenter.com/sitemaps/products.xml"
 
 SEEN_FILE = "seen_products.json"
 
