@@ -9,7 +9,6 @@ BOT_TOKEN = os.environ["BOT_TOKEN"]
 CHAT_ID = os.environ["CHAT_ID"]
 
 URL = "https://www.pokemoncenter.com/sitemaps/products.xml"
-
 SEEN_FILE = "seen_products.json"
 
 
@@ -33,8 +32,8 @@ def load_seen():
 def save_seen(products):
     with open(SEEN_FILE, "w") as f:
         json.dump(list(products), f)
-        
-        
+
+
 def get_products():
     headers = {
         "User-Agent": (
@@ -52,7 +51,7 @@ def get_products():
     print(f"Status: {r.status_code}")
     print(f"Length: {len(r.text)}")
 
-    soup = BeautifulSoup(r.text, "xml")
+    soup = BeautifulSoup(r.text, "html.parser")
 
     products = {}
 
@@ -62,13 +61,15 @@ def get_products():
         if "/product/" not in url:
             continue
 
-        product_id = url.split("/product/")[1].split("/")[0]
+        slug = url.split("/")[-1]
+        name = slug.replace("-", " ").title()
 
-        products[url] = product_id
+        products[url] = name
 
     print(f"Found {len(products)} products")
 
     return products
+
 
 async def check_site():
     try:
@@ -78,19 +79,22 @@ async def check_site():
 
         seen = load_seen()
 
-if not seen:
-        print("First run detected, saving products only")
-        save_seen(current_products.keys())
-        return
+        # First run - save everything without alerts
+        if not seen:
+            print("First run detected, saving products only")
+            save_seen(current_products.keys())
+            return
 
         new_urls = set(current_products.keys()) - seen
 
         if new_urls:
+            print(f"Found {len(new_urls)} new products")
+
             for url in new_urls:
                 name = current_products[url]
 
                 await send_message(
-                    f"🚨 NEW POKÉMON CENTER UK PRODUCT\n\n"
+                    f"🚨 NEW POKÉMON CENTER PRODUCT\n\n"
                     f"{name}\n\n"
                     f"{url}"
                 )
@@ -109,7 +113,7 @@ if not seen:
 
 async def heartbeat():
     try:
-        await send_message("✅ Pokémon Center UK bot is alive")
+        await send_message("✅ Pokémon Center bot is alive")
     except:
         pass
 
@@ -127,7 +131,6 @@ async def runner():
             counter = 0
 
         await asyncio.sleep(300)
-
 
 
 asyncio.run(runner())
