@@ -52,37 +52,31 @@ def get_products():
     }
 
     r = requests.get(
-        URL,
-        timeout=30,
-        headers=headers
-    )
+    URL,
+    timeout=30,
+    headers=headers
+)
 
-    print(f"Status: {r.status_code}")
-    print(f"HTML length: {len(r.text)}")
-    print("FIRST 1000 CHARS:")
-    print(r.text[:1000])
+print(f"Status: {r.status_code}")
+print(f"Length: {len(r.text)}")
 
-    soup = BeautifulSoup(r.text, "html.parser")
+soup = BeautifulSoup(r.text, "xml")
 
-    products = {}
+products = {}
 
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
+for loc in soup.find_all("loc"):
+    url = loc.text.strip()
 
-        if "/product/" not in href:
-            continue
+    if "/product/" not in url:
+        continue
 
-        name = a.get_text(" ", strip=True)
+    product_id = url.split("/product/")[1].split("/")[0]
 
-        if not name:
-            continue
+    products[url] = product_id
 
-        if href.startswith("/"):
-            href = "https://www.pokemoncenter.com" + href
+print(f"Found {len(products)} products")
 
-        products[href] = name
-
-    return products
+return products
 
 async def check_site():
     try:
