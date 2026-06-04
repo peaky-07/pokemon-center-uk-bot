@@ -43,12 +43,20 @@ def get_products():
         )
     }
 
-    r = requests.get(URL, headers=headers, timeout=30)
+r = requests.get(
+    URL,
+    timeout=30,
+    headers={
+        "User-Agent": "Mozilla/5.0"
+    }
+)
 
-    print(f"Status: {r.status_code}")
-    print(f"HTML length: {len(r.text)}")
+print(f"Status: {r.status_code}")
+print(f"HTML length: {len(r.text)}")
+print("FIRST 1000 CHARS:")
+print(r.text[:1000])
 
-    soup = BeautifulSoup(r.text, "html.parser")
+soup = BeautifulSoup(r.text, "html.parser")
 
     products = {}
 
